@@ -39,8 +39,7 @@ public class MainHostActivityFragment extends Fragment {
         oneButton = getView().findViewById(R.id.one_button);
         oneButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                readOutText.setText("1");
+            public void onClick(View v) { readOutText.setText("1");
             }
         });
 
