@@ -40,8 +40,8 @@ public class MainHostActivityFragment extends Fragment {
             percentButton,
             backButton,
             clearButton;
-    //StringBuilder displayBuilder = new StringBuilder();
     Calc calc = new Calc();
+
 
     public static MainHostActivityFragment newInstance() {
         return new MainHostActivityFragment();
@@ -59,9 +59,6 @@ public class MainHostActivityFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         readOutText = getView().findViewById(R.id.readOutText);
-        if (savedInstanceState == null) {
-            readOutText.setText("");
-        }
 
         zeroButton = getView().findViewById(R.id.zero_button);
         zeroButton.setOnClickListener(new View.OnClickListener() {
@@ -142,13 +139,9 @@ public class MainHostActivityFragment extends Fragment {
         equalsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if (displayBuilder.length() != 0) {
-//                    calc.addConstant(convertToDouble(displayBuilder));
-//                    resetDisplayBuilder();
-//                    readOutText.setText(String.valueOf(calc.calculate()));
-//                }
                 if (readOutText.length() != 0) {
                     calc.addConstant(charSequenceToDouble(readOutText.getText()));
+                    resetDisplay();
                     readOutText.setText(doubleToString(calc.calculate()));
                 }
            }
@@ -161,7 +154,7 @@ public class MainHostActivityFragment extends Fragment {
                 if (readOutText.length() != 0) {
                     calc.addConstant(charSequenceToDouble(readOutText.getText()));
                     calc.addOperator(Operation.ADDITION);
-                    resetDisplayBuilder();
+                    resetDisplay();
                 }
             }
         });
@@ -173,6 +166,7 @@ public class MainHostActivityFragment extends Fragment {
                 if (readOutText.length() != 0) {
                     calc.addConstant(charSequenceToDouble(readOutText.getText()));
                     calc.addOperator(Operation.SUBTRACTION);
+                    resetDisplay();
                 }
             }
         });
@@ -184,6 +178,7 @@ public class MainHostActivityFragment extends Fragment {
                 if (readOutText.length() != 0) {
                     calc.addConstant(charSequenceToDouble(readOutText.getText()));
                     calc.addOperator(Operation.MULTIPLICATION);
+                    resetDisplay();
                 }
             }
         });
@@ -195,6 +190,7 @@ public class MainHostActivityFragment extends Fragment {
                 if (readOutText.length() != 0) {
                     calc.addConstant(charSequenceToDouble(readOutText.getText()));
                     calc.addOperator(Operation.DIVISION);
+                    resetDisplay();
                 }
             }
         });
@@ -247,7 +243,10 @@ public class MainHostActivityFragment extends Fragment {
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                resetDisplayBuilder();
+                calc.addConstant(0);
+                calc.addOperator(Operation.MULTIPLICATION);
+                calc.calculate();
+                resetDisplay();
             }
         });
     }
@@ -256,13 +255,12 @@ public class MainHostActivityFragment extends Fragment {
         return String.valueOf(number);
     }
 
-    private void resetDisplayBuilder() {
+    private void resetDisplay() {
         readOutText.setText("");
     }
 
     private void addNumberToValue(String value) {
         readOutText.append(value);
-        //readOutText.setText(displayBuilder);
     }
 
     private Double charSequenceToDouble (CharSequence displayString) {
