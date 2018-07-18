@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import com.brazenhiker.richcalc.Calcs.Calc;
+import com.brazenhiker.richcalc.Calcs.Operation;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -37,6 +39,7 @@ public class MainHostActivityFragment extends Fragment {
             backButton,
             clearButton;
     StringBuilder displayBuilder = new StringBuilder();
+    Calc calc = new Calc();
 
     public static MainHostActivityFragment newInstance() {
         return new MainHostActivityFragment();
@@ -134,7 +137,11 @@ public class MainHostActivityFragment extends Fragment {
         equalsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                readOutText.setText("=");
+                    calc.addConstant(stringBuilderToDouble(displayBuilder));
+                    double result = calc.calculate();
+                    clearDisplay();
+                    displayBuilder.append(result);
+                    readOutText.setText(displayBuilder);
             }
         });
 
@@ -142,7 +149,9 @@ public class MainHostActivityFragment extends Fragment {
         plusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                readOutText.setText("+");
+                    calc.addConstant(stringBuilderToDouble(displayBuilder));
+                    calc.addOperator(Operation.ADDITION);
+                    clearDisplay();
             }
         });
 
@@ -150,7 +159,9 @@ public class MainHostActivityFragment extends Fragment {
         minusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                readOutText.setText("-");
+                    calc.addConstant(stringBuilderToDouble(displayBuilder));
+                    calc.addOperator(Operation.SUBTRACTION);
+                    clearDisplay();
             }
         });
 
@@ -158,7 +169,9 @@ public class MainHostActivityFragment extends Fragment {
         multiplyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                readOutText.setText("*");
+                calc.addConstant(stringBuilderToDouble(displayBuilder));
+                calc.addOperator(Operation.MULTIPLICATION);
+                clearDisplay();
             }
         });
 
@@ -166,7 +179,9 @@ public class MainHostActivityFragment extends Fragment {
         divideButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                readOutText.setText("/");
+                calc.addConstant(stringBuilderToDouble(displayBuilder));
+                calc.addOperator(Operation.DIVISION);
+                clearDisplay();
             }
         });
 
@@ -174,7 +189,7 @@ public class MainHostActivityFragment extends Fragment {
         decimalButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (displayBuilder.toString().contains(".") == false){
+                if (!displayBuilder.toString().contains(".")){
                     addNumberToValue(".");
                 }
             }
@@ -184,7 +199,10 @@ public class MainHostActivityFragment extends Fragment {
         signButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                readOutText.setText("+/-");
+                    double signChange = stringBuilderToDouble(displayBuilder) * -1;
+                    clearDisplay();
+                    displayBuilder.append(signChange);
+                    readOutText.setText(displayBuilder);
             }
         });
 
@@ -192,7 +210,12 @@ public class MainHostActivityFragment extends Fragment {
         percentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                readOutText.setText("%");
+                if (displayBuilder.length() != 0) {
+                    double percentage = stringBuilderToDouble(displayBuilder) / 100;
+                    clearDisplay();
+                    displayBuilder.append(percentage);
+                    readOutText.setText(displayBuilder);
+                }
             }
         });
 
@@ -200,8 +223,10 @@ public class MainHostActivityFragment extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                displayBuilder.deleteCharAt(displayBuilder.length()-1);
-                readOutText.setText(displayBuilder);
+                if (displayBuilder.length() != 0) {
+                    displayBuilder.deleteCharAt(displayBuilder.length() - 1);
+                    readOutText.setText(displayBuilder);
+                }
             }
         });
 
@@ -209,10 +234,22 @@ public class MainHostActivityFragment extends Fragment {
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                displayBuilder.delete(0,displayBuilder.length());
-                readOutText.setText("");
+                clearDisplay();
             }
         });
+    }
+
+    private void clearDisplay() {
+        displayBuilder.delete(0,displayBuilder.length());
+        readOutText.setText("");
+    }
+
+    private double stringBuilderToDouble(StringBuilder displayBuilder) {
+        if (displayBuilder.length() != 0) {
+            return Double.parseDouble(displayBuilder.toString());
+        }else {
+            return 0;
+        }
     }
 
     private void addNumberToValue(String value) {
