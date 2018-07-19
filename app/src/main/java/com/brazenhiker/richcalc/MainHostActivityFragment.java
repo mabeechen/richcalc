@@ -59,184 +59,91 @@ public class MainHostActivityFragment extends Fragment {
         readOutText = getView().findViewById(R.id.readOutText);
 
         zeroButton = getView().findViewById(R.id.zero_button);
-        zeroButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addNumberToValue("0");
-            }
-        });
+        zeroButton.setOnClickListener(view1 -> addNumberToValue("0"));
 
         oneButton = getView().findViewById(R.id.one_button);
-        oneButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addNumberToValue("1");
-            }
-        });
+        oneButton.setOnClickListener(v -> addNumberToValue("1"));
 
         twoButton = getView().findViewById(R.id.two_button);
         twoButton.setOnClickListener(v -> addNumberToValue("2"));
 
         threeButton = getView().findViewById(R.id.three_button);
-        threeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addNumberToValue("3");
-            }
-        });
+        threeButton.setOnClickListener(view12 -> addNumberToValue("3"));
 
         fourButton = getView().findViewById(R.id.four_button);
-        fourButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addNumberToValue("4");
-            }
-        });
+        fourButton.setOnClickListener(view13 -> addNumberToValue("4"));
 
         fiveButton = getView().findViewById(R.id.five_button);
-        fiveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addNumberToValue("5");
-            }
-        });
+        fiveButton.setOnClickListener(view14 -> addNumberToValue("5"));
 
         sixButton = getView().findViewById(R.id.six_button);
-        sixButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addNumberToValue("6");
-            }
-        });
+        sixButton.setOnClickListener(view15 -> addNumberToValue("6"));
 
         sevenButton = getView().findViewById(R.id.seven_button);
-        sevenButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addNumberToValue("7");
-            }
-        });
+        sevenButton.setOnClickListener(view16 -> addNumberToValue("7"));
 
         eightButton = getView().findViewById(R.id.eight_button);
-        eightButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addNumberToValue("8");
-            }
-        });
+        eightButton.setOnClickListener(view17 -> addNumberToValue("8"));
 
         nineButton = getView().findViewById(R.id.nine_button);
-        nineButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addNumberToValue("9");
-            }
-        });
+        nineButton.setOnClickListener(view18 -> addNumberToValue("9"));
 
         equalsButton = getView().findViewById(R.id.equals_button);
-        equalsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                    calc.addConstant(stringBuilderToDouble(displayBuilder));
-                    double result = calc.calculate();
-                    clearDisplay();
-                    displayBuilder.append(result);
-                    readOutText.setText(displayBuilder);
-            }
+        equalsButton.setOnClickListener(view19 -> {
+                calc.addConstant(stringBuilderToDouble(displayBuilder));
+                double result = calc.calculate();
+                clearDisplay();
+                displayBuilder.append(result);
+                readOutText.setText(displayBuilder);
         });
 
         plusButton = getView().findViewById(R.id.plus_button);
-        plusButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                    calc.addConstant(stringBuilderToDouble(displayBuilder));
-                    calc.addOperator(Operation.ADDITION);
-                    clearDisplay();
-            }
-        });
+        plusButton.setOnClickListener(view110 -> operationButtonClicked(Operation.ADDITION));
 
         minusButton = getView().findViewById(R.id.minus_button);
-        minusButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                    calc.addConstant(stringBuilderToDouble(displayBuilder));
-                    calc.addOperator(Operation.SUBTRACTION);
-                    clearDisplay();
-            }
-        });
+        minusButton.setOnClickListener(view111 -> operationButtonClicked(Operation.SUBTRACTION));
 
         multiplyButton = getView().findViewById(R.id.multiply_button);
-        multiplyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calc.addConstant(stringBuilderToDouble(displayBuilder));
-                calc.addOperator(Operation.MULTIPLICATION);
-                clearDisplay();
-            }
-        });
+        multiplyButton.setOnClickListener(view112 -> operationButtonClicked(Operation.MULTIPLICATION));
 
         divideButton = getView().findViewById(R.id.divide_button);
-        divideButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calc.addConstant(stringBuilderToDouble(displayBuilder));
-                calc.addOperator(Operation.DIVISION);
-                clearDisplay();
-            }
-        });
+        divideButton.setOnClickListener(view113 -> operationButtonClicked(Operation.DIVISION));
 
         decimalButton = getView().findViewById(R.id.decimal_button);
-        decimalButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!displayBuilder.toString().contains(".")){
-                    addNumberToValue(".");
-                }
+        decimalButton.setOnClickListener(view114 -> {
+            if (!displayBuilder.toString().contains(".")){
+                addNumberToValue(".");
             }
         });
 
         signButton = getView().findViewById(R.id.sign_button);
-        signButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                    double signChange = stringBuilderToDouble(displayBuilder) * -1;
-                    clearDisplay();
-                    displayBuilder.append(signChange);
-                    readOutText.setText(displayBuilder);
-            }
+        signButton.setOnClickListener(view115 -> {
+                double signChange = stringBuilderToDouble(displayBuilder) * -1;
+                clearDisplay();
+                displayBuilder.append(signChange);
+                readOutText.setText(displayBuilder);
         });
 
         percentButton = getView().findViewById(R.id.percent_button);
-        percentButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (displayBuilder.length() != 0) {
-                    double percentage = stringBuilderToDouble(displayBuilder) / 100;
-                    clearDisplay();
-                    displayBuilder.append(percentage);
-                    readOutText.setText(displayBuilder);
-                }
+        percentButton.setOnClickListener(view116 -> {
+            if (displayBuilder.length() != 0) {
+                double percentage = stringBuilderToDouble(displayBuilder) / 100;
+                clearDisplay();
+                displayBuilder.append(percentage);
+                readOutText.setText(displayBuilder);
             }
         });
 
         backButton = getView().findViewById(R.id.back_button);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (displayBuilder.length() != 0) {
-                    displayBuilder.deleteCharAt(displayBuilder.length() - 1);
-                    readOutText.setText(displayBuilder);
-                }
+        backButton.setOnClickListener(view117 -> {
+            if (displayBuilder.length() != 0) {
+                displayBuilder.deleteCharAt(displayBuilder.length() - 1);
+                readOutText.setText(displayBuilder);
             }
         });
 
         clearButton = getView().findViewById(R.id.clear_button);
-        clearButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clearDisplay();
-            }
-        });
+        clearButton.setOnClickListener(view118 -> clearDisplay());
     }
 
     private void clearDisplay() {
@@ -255,5 +162,11 @@ public class MainHostActivityFragment extends Fragment {
     private void addNumberToValue(String value) {
         displayBuilder.append(value);
         readOutText.setText(displayBuilder);
+    }
+
+    private void operationButtonClicked(Operation operator) {
+        calc.addConstant(stringBuilderToDouble(displayBuilder));
+        calc.addOperator(operator);
+        clearDisplay();
     }
 }
