@@ -58,6 +58,12 @@ class Calc(value: Double? = null) {
             }
         }
     }
+
+    fun clear() {
+        leftOperand = null
+        rightOperand = null
+        operation = Operation.UNKNOWN
+    }
 }
 
 /**

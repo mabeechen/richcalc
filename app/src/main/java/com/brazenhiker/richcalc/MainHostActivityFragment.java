@@ -149,6 +149,7 @@ public class MainHostActivityFragment extends Fragment {
     private void clearDisplay() {
         displayBuilder.delete(0,displayBuilder.length());
         readOutText.setText("");
+        calc.clear();
     }
 
     private double stringBuilderToDouble(StringBuilder displayBuilder) {
