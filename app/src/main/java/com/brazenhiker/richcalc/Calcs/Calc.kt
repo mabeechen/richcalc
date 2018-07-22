@@ -58,15 +58,30 @@ class Calc(value: Double? = null) {
             }
         }
     }
+
+    fun clear() {
+        leftOperand = null
+        rightOperand = null
+        operation = Operation.UNKNOWN
+    }
 }
 
 /**
  * Supported operators that can act on operands
  */
 enum class Operation {
-    ADDITION,
-    SUBTRACTION,
-    MULTIPLICATION,
-    DIVISION,
-    UNKNOWN
+    ADDITION("+"),
+    SUBTRACTION("-"),
+    MULTIPLICATION("*"),
+    DIVISION("%"),
+    UNKNOWN("#");
+
+    private var representation = String()
+    private constructor(rep: String) {
+        representation = rep;
+    }
+
+    override fun toString(): String {
+        return representation
+    }
 }

@@ -200,8 +200,8 @@
 
     <Button
         android:id="@+id/sign_button"
-        android:layout_width="103dp"
-        android:layout_height="104dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:autoSizeTextType="uniform"
         android:gravity="center"
         android:text="+/-"
@@ -252,13 +252,27 @@
         android:layout_height="0dp"
         android:background="@drawable/back"
         android:text="0"
-        android:textAlignment="textEnd"
+        android:gravity="center_vertical|right|end"
         android:textColor="@color/colorPrimary"
-        android:textSize="75sp"
+        android:textSize="65sp"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineH18"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/summaryText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/back"
+        android:text=""
+        android:gravity="center_vertical|right|end"
+        android:textColor="@color/colorPrimary"
+        android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@+id/guidelineH25"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/guidelineH18"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guidelineV25"
@@ -280,6 +294,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.75" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelineH18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent=".18" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guidelineH25"
