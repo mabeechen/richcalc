@@ -17,7 +17,9 @@ import com.brazenhiker.richcalc.Calcs.Operation;
  */
 public class MainHostActivityFragment extends Fragment {
 
-    TextView readOutText;
+    private boolean resetSummary = false;
+
+    TextView readOutText, summaryTextView;
     Button zeroButton,
             oneButton,
             twoButton,
@@ -39,6 +41,7 @@ public class MainHostActivityFragment extends Fragment {
             backButton,
             clearButton;
     StringBuilder displayBuilder = new StringBuilder();
+    String summaryText = "";
     Calc calc = new Calc();
 
     public static MainHostActivityFragment newInstance() {
@@ -57,6 +60,7 @@ public class MainHostActivityFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         readOutText = getView().findViewById(R.id.readOutText);
+        summaryTextView = getView().findViewById(R.id.summaryText);
 
         zeroButton = getView().findViewById(R.id.zero_button);
         zeroButton.setOnClickListener(view1 -> addNumberToValue("0"));
@@ -90,11 +94,14 @@ public class MainHostActivityFragment extends Fragment {
 
         equalsButton = getView().findViewById(R.id.equals_button);
         equalsButton.setOnClickListener(view19 -> {
-                calc.addConstant(stringBuilderToDouble(displayBuilder));
-                double result = calc.calculate();
-                clearDisplay();
-                displayBuilder.append(result);
-                readOutText.setText(displayBuilder);
+            resetSummary = true;
+            summaryText += displayBuilder.toString();
+            summaryTextView.setText(summaryText);
+            calc.addConstant(stringBuilderToDouble(displayBuilder));
+            double result = calc.calculate();
+            clearDisplay();
+            displayBuilder.append(result);
+            readOutText.setText(displayBuilder);
         });
 
         plusButton = getView().findViewById(R.id.plus_button);
@@ -143,13 +150,21 @@ public class MainHostActivityFragment extends Fragment {
         });
 
         clearButton = getView().findViewById(R.id.clear_button);
-        clearButton.setOnClickListener(view118 -> clearDisplay());
+        clearButton.setOnClickListener(view118 -> {
+            calc.clear();
+            clearSummaryView();
+            clearDisplay();
+        });
     }
 
     private void clearDisplay() {
         displayBuilder.delete(0,displayBuilder.length());
         readOutText.setText("");
-        calc.clear();
+    }
+
+    private void clearSummaryView() {
+        summaryText = "";
+        summaryTextView.setText("");
     }
 
     private double stringBuilderToDouble(StringBuilder displayBuilder) {
@@ -161,13 +176,24 @@ public class MainHostActivityFragment extends Fragment {
     }
 
     private void addNumberToValue(String value) {
+        if (resetSummary) {
+            clearDisplay();
+            clearSummaryView();
+            resetSummary = false;
+        }
         displayBuilder.append(value);
         readOutText.setText(displayBuilder);
     }
 
     private void operationButtonClicked(Operation operator) {
+        if (resetSummary) {
+            resetSummary = false;
+            summaryText = "";
+        }
         calc.addConstant(stringBuilderToDouble(displayBuilder));
         calc.addOperator(operator);
+        summaryText += displayBuilder.toString() + " " + operator.toString() + " ";
+        summaryTextView.setText(summaryText);
         clearDisplay();
     }
 }
