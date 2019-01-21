@@ -27,7 +27,7 @@
               android:id="@+id/fragment"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:name="com.brazenhiker.richcalc.MainHostActivityFragmentKotlin"
+              android:name="com.brazenhiker.richcalc.MainHostActivityFragment"
               app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 </android.support.design.widget.CoordinatorLayout>
