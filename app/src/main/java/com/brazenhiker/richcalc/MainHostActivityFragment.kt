@@ -17,31 +17,11 @@ class MainHostActivityFragment : Fragment() {
 
     private var resetSummary = false
 
-    lateinit var readOutText: TextView
-    lateinit var summaryTextView: TextView
-    lateinit var zeroButton: Button
-    lateinit var oneButton: Button
-    lateinit var twoButton: Button
-    lateinit var threeButton: Button
-    lateinit var fourButton: Button
-    lateinit var fiveButton: Button
-    lateinit var sixButton: Button
-    lateinit var sevenButton: Button
-    lateinit var eightButton: Button
-    lateinit var nineButton: Button
-    lateinit var equalsButton: Button
-    lateinit var plusButton: Button
-    lateinit var minusButton: Button
-    lateinit var multiplyButton: Button
-    lateinit var divideButton: Button
-    lateinit var decimalButton: Button
-    lateinit var signButton: Button
-    lateinit var percentButton: Button
-    lateinit var backButton: Button
-    lateinit var clearButton: Button
-    var displayBuilder = StringBuilder()
-    var summaryText = ""
-    var calc = Calc()
+    private lateinit var readOutText: TextView
+    private lateinit var summaryTextView: TextView
+    private var displayBuilder = StringBuilder()
+    private var summaryText = ""
+    private var calc = Calc()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -53,38 +33,38 @@ class MainHostActivityFragment : Fragment() {
         readOutText = getView()!!.findViewById(R.id.readOutText)
         summaryTextView = getView()!!.findViewById(R.id.summaryText)
 
-        zeroButton = getView()!!.findViewById(R.id.zero_button)
-        zeroButton.setOnClickListener { view1 -> addNumberToValue("0") }
+        val zeroButton: Button = getView()!!.findViewById(R.id.zero_button)
+        zeroButton.setOnClickListener { addNumberToValue("0") }
 
-        oneButton = getView()!!.findViewById(R.id.one_button)
-        oneButton.setOnClickListener { v -> addNumberToValue("1") }
+        val oneButton: Button = getView()!!.findViewById(R.id.one_button)
+        oneButton.setOnClickListener { addNumberToValue("1") }
 
-        twoButton = getView()!!.findViewById(R.id.two_button)
-        twoButton.setOnClickListener { v -> addNumberToValue("2") }
+        val twoButton: Button = getView()!!.findViewById(R.id.two_button)
+        twoButton.setOnClickListener { addNumberToValue("2") }
 
-        threeButton = getView()!!.findViewById(R.id.three_button)
-        threeButton.setOnClickListener { view12 -> addNumberToValue("3") }
+        val threeButton: Button = getView()!!.findViewById(R.id.three_button)
+        threeButton.setOnClickListener { addNumberToValue("3") }
 
-        fourButton = getView()!!.findViewById(R.id.four_button)
-        fourButton.setOnClickListener { view13 -> addNumberToValue("4") }
+        val fourButton: Button = getView()!!.findViewById(R.id.four_button)
+        fourButton.setOnClickListener { addNumberToValue("4") }
 
-        fiveButton = getView()!!.findViewById(R.id.five_button)
-        fiveButton.setOnClickListener { view14 -> addNumberToValue("5") }
+        val fiveButton: Button = getView()!!.findViewById(R.id.five_button)
+        fiveButton.setOnClickListener { addNumberToValue("5") }
 
-        sixButton = getView()!!.findViewById(R.id.six_button)
-        sixButton.setOnClickListener { view15 -> addNumberToValue("6") }
+        val sixButton: Button = getView()!!.findViewById(R.id.six_button)
+        sixButton.setOnClickListener { addNumberToValue("6") }
 
-        sevenButton = getView()!!.findViewById(R.id.seven_button)
-        sevenButton.setOnClickListener { view16 -> addNumberToValue("7") }
+        val sevenButton: Button = getView()!!.findViewById(R.id.seven_button)
+        sevenButton.setOnClickListener { addNumberToValue("7") }
 
-        eightButton = getView()!!.findViewById(R.id.eight_button)
-        eightButton.setOnClickListener { view17 -> addNumberToValue("8") }
+        val eightButton: Button = getView()!!.findViewById(R.id.eight_button)
+        eightButton.setOnClickListener { addNumberToValue("8") }
 
-        nineButton = getView()!!.findViewById(R.id.nine_button)
-        nineButton.setOnClickListener { view18 -> addNumberToValue("9") }
+        val nineButton: Button = getView()!!.findViewById(R.id.nine_button)
+        nineButton.setOnClickListener { addNumberToValue("9") }
 
-        equalsButton = getView()!!.findViewById(R.id.equals_button)
-        equalsButton.setOnClickListener { view19 ->
+        val equalsButton: Button = getView()!!.findViewById(R.id.equals_button)
+        equalsButton.setOnClickListener {
             resetSummary = true
             summaryText += displayBuilder.toString()
             summaryTextView.text = summaryText
@@ -95,36 +75,36 @@ class MainHostActivityFragment : Fragment() {
             readOutText.text = displayBuilder
         }
 
-        plusButton = getView()!!.findViewById(R.id.plus_button)
-        plusButton.setOnClickListener { view110 -> operationButtonClicked(Operation.ADDITION) }
+        val plusButton: Button = getView()!!.findViewById(R.id.plus_button)
+        plusButton.setOnClickListener { operationButtonClicked(Operation.ADDITION) }
 
-        minusButton = getView()!!.findViewById(R.id.minus_button)
-        minusButton.setOnClickListener { view111 -> operationButtonClicked(Operation.SUBTRACTION) }
+        val minusButton: Button = getView()!!.findViewById(R.id.minus_button)
+        minusButton.setOnClickListener { operationButtonClicked(Operation.SUBTRACTION) }
 
-        multiplyButton = getView()!!.findViewById(R.id.multiply_button)
-        multiplyButton.setOnClickListener { view112 -> operationButtonClicked(Operation.MULTIPLICATION) }
+        val multiplyButton: Button = getView()!!.findViewById(R.id.multiply_button)
+        multiplyButton.setOnClickListener { operationButtonClicked(Operation.MULTIPLICATION) }
 
-        divideButton = getView()!!.findViewById(R.id.divide_button)
-        divideButton.setOnClickListener { view113 -> operationButtonClicked(Operation.DIVISION) }
+        val divideButton: Button = getView()!!.findViewById(R.id.divide_button)
+        divideButton.setOnClickListener { operationButtonClicked(Operation.DIVISION) }
 
-        decimalButton = getView()!!.findViewById(R.id.decimal_button)
-        decimalButton.setOnClickListener { view114 ->
+        val decimalButton: Button = getView()!!.findViewById(R.id.decimal_button)
+        decimalButton.setOnClickListener {
             if (!displayBuilder.toString().contains(".")) {
                 addNumberToValue(".")
             }
         }
 
-        signButton = getView()!!.findViewById(R.id.sign_button)
-        signButton.setOnClickListener { view115 ->
+        val signButton: Button = getView()!!.findViewById(R.id.sign_button)
+        signButton.setOnClickListener {
             val signChange = stringBuilderToDouble(displayBuilder) * -1
             clearDisplay()
             displayBuilder.append(signChange)
             readOutText.text = displayBuilder
         }
 
-        percentButton = getView()!!.findViewById(R.id.percent_button)
-        percentButton.setOnClickListener { view116 ->
-            if (displayBuilder.length != 0) {
+        val percentButton: Button = getView()!!.findViewById(R.id.percent_button)
+        percentButton.setOnClickListener {
+            if (this.displayBuilder.isNotEmpty()) {
                 val percentage = stringBuilderToDouble(displayBuilder) / 100
                 clearDisplay()
                 displayBuilder.append(percentage)
@@ -132,16 +112,16 @@ class MainHostActivityFragment : Fragment() {
             }
         }
 
-        backButton = getView()!!.findViewById(R.id.back_button)
-        backButton.setOnClickListener { view117 ->
-            if (displayBuilder.length != 0) {
+        val backButton: Button = getView()!!.findViewById(R.id.back_button)
+        backButton.setOnClickListener {
+            if (this.displayBuilder.isNotEmpty()) {
                 displayBuilder.deleteCharAt(displayBuilder.length - 1)
                 readOutText.text = displayBuilder
             }
         }
 
-        clearButton = getView()!!.findViewById(R.id.clear_button)
-        clearButton.setOnClickListener { view118 ->
+        val clearButton: Button = getView()!!.findViewById(R.id.clear_button)
+        clearButton.setOnClickListener {
             calc.clear()
             clearSummaryView()
             clearDisplay()
@@ -159,8 +139,8 @@ class MainHostActivityFragment : Fragment() {
     }
 
     private fun stringBuilderToDouble(displayBuilder: StringBuilder): Double {
-        return if (displayBuilder.length != 0) {
-            java.lang.Double.parseDouble(displayBuilder.toString())
+        return if (displayBuilder.isNotEmpty()) {
+            this.toString().toDouble()
         } else {
             0.0
         }
@@ -186,12 +166,5 @@ class MainHostActivityFragment : Fragment() {
         summaryText += displayBuilder.toString() + " " + operator.toString() + " "
         summaryTextView.text = summaryText
         clearDisplay()
-    }
-
-    companion object {
-
-        fun newInstance(): MainHostActivityFragment {
-            return MainHostActivityFragment()
-        }
     }
 }
