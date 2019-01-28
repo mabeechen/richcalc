@@ -68,7 +68,7 @@ class MainHostActivityFragment : Fragment() {
             resetSummary = true
             summaryText += displayBuilder.toString()
             summaryTextView.text = summaryText
-            calc.addConstant(stringBuilderToDouble(displayBuilder))
+            calc.addConstant(displayBuilder.toString().toDouble())
             val result = calc.calculate()
             clearDisplay()
             displayBuilder.append(result)
@@ -96,7 +96,7 @@ class MainHostActivityFragment : Fragment() {
 
         val signButton: Button = getView()!!.findViewById(R.id.sign_button)
         signButton.setOnClickListener {
-            val signChange = stringBuilderToDouble(displayBuilder) * -1
+            val signChange = (displayBuilder.toString().toDouble()) * -1
             clearDisplay()
             displayBuilder.append(signChange)
             readOutText.text = displayBuilder
@@ -105,7 +105,7 @@ class MainHostActivityFragment : Fragment() {
         val percentButton: Button = getView()!!.findViewById(R.id.percent_button)
         percentButton.setOnClickListener {
             if (this.displayBuilder.isNotEmpty()) {
-                val percentage = stringBuilderToDouble(displayBuilder) / 100
+                val percentage = (displayBuilder.toString().toDouble()) / 100
                 clearDisplay()
                 displayBuilder.append(percentage)
                 readOutText.text = displayBuilder
@@ -138,14 +138,6 @@ class MainHostActivityFragment : Fragment() {
         summaryTextView.text = ""
     }
 
-    private fun stringBuilderToDouble(displayBuilder: StringBuilder): Double {
-        return if (displayBuilder.isNotEmpty()) {
-            this.toString().toDouble()
-        } else {
-            0.0
-        }
-    }
-
     private fun addNumberToValue(value: String) {
         if (resetSummary) {
             clearDisplay()
@@ -161,7 +153,7 @@ class MainHostActivityFragment : Fragment() {
             resetSummary = false
             summaryText = ""
         }
-        calc.addConstant(stringBuilderToDouble(displayBuilder))
+        calc.addConstant(displayBuilder.toString().toDouble())
         calc.addOperator(operator)
         summaryText += displayBuilder.toString() + " " + operator.toString() + " "
         summaryTextView.text = summaryText
